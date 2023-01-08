@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useSettingsStore } from "@/store/settings";
-const iconSize = "1.2em";
+const iconSize = "1.3em";
 const iconClass = "hover:animate-ping";
 const settings = useSettingsStore();
 const navClass = computed(() =>
-  settings.navOpen ? "opacity-1" : "max-lg:opacity-0"
+  settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
 );
 </script>
 <template>

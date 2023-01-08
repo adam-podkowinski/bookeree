@@ -4,6 +4,6 @@
     <main class="x-padding">
       <slot />
     </main>
-    <footer class="x-padding mt-6 bg-amber-900/10 py-7">Footer</footer>
+    <footer class="mt-24 bg-zinc-800/50 px-12 py-12">Bookery &copy;</footer>
   </div>
 </template>
