@@ -1,4 +1,3 @@
-<script setup></script>
 <template>
   <div class="min-h-screen bg-zinc-800 text-neutral-100">
     <NuxtLayout>

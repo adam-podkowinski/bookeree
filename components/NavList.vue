@@ -1,16 +1,15 @@
 <script lang="ts" setup>
+import { useSettingsStore } from "@/store/settings";
 const iconSize = "1.2em";
 const iconClass = "hover:animate-ping";
-// TODO: Keep this state in pinia
-const open = ref(false);
-const close = () => (open.value = false);
+const settings = useSettingsStore();
 const navClass = computed(() =>
-  open.value ? "opacity-1" : "max-lg:opacity-0"
+  settings.navOpen ? "opacity-1" : "max-lg:opacity-0"
 );
 </script>
 <template>
   <nav>
-    <button class="lg:hidden" @click="open = !open">
+    <button class="lg:hidden" @click="settings.toggleNav">
       <transition
         mode="out-in"
         enter-active-class="transition duration-200"
@@ -18,7 +17,11 @@ const navClass = computed(() =>
         leave-to-class="opacity-0 rotate-45"
         enter-from-class="opacity-0 rotate-45"
       >
-        <Icon v-if="open" name="material-symbols:close" class="text-4xl" />
+        <Icon
+          v-if="settings.navOpen"
+          name="material-symbols:close"
+          class="text-4xl"
+        />
         <Icon v-else name="ri:menu-3-fill" class="text-4xl" />
       </transition>
     </button>
@@ -28,19 +31,19 @@ const navClass = computed(() =>
 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
     >
       <li>
-        <NavLink :close="close" to="/books">
+        <NavLink to="/books">
           <Icon name="ph:books-bold" :size="iconSize" :class="iconClass" />
           My Books
         </NavLink>
       </li>
       <li>
-        <NavLink :close="close" to="/add">
+        <NavLink to="/add">
           <Icon name="bx:bxs-book-add" :size="iconSize" :class="iconClass" />
           Add a Book
         </NavLink>
       </li>
       <li>
-        <NavLink :close="close" to="/logout">
+        <NavLink to="/logout">
           <Icon
             name="carbon:user-avatar-filled"
             :size="iconSize"
@@ -50,11 +53,7 @@ lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
         </NavLink>
       </li>
       <li>
-        <NavLink
-          :close="close"
-          to="/logout"
-          class="hover:bg-red-500 hover:text-neutral-100"
-        >
+        <NavLink to="/logout" class="hover:bg-red-500 hover:text-neutral-100">
           <Icon
             name="fa-solid:sign-out-alt"
             :size="iconSize"
