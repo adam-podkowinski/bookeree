@@ -7,9 +7,12 @@
   </div>
 </template>
 <style lang="postcss">
+.x-padding {
+  @apply px-8 md:px-28 xl:px-36;
+}
 .page-enter-active,
 .page-leave-active {
-  @apply transition duration-300;
+  @apply transition duration-200;
 }
 .page-enter-from,
 .page-leave-to {
