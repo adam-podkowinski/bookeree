@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-const iconSize = "1.3em";
+const iconSize = "1.2em";
 const iconClass = "hover:animate-ping";
+// TODO: Keep this state in pinia
 const open = ref(false);
 const close = () => (open.value = false);
 const navClass = computed(() =>
@@ -23,7 +24,7 @@ const navClass = computed(() =>
     </button>
     <ul
       :class="`lg:opacity-1 fixed left-0 top-0 z-[-1] flex h-screen w-screen flex-col items-center
-      justify-center gap-6 bg-amber-300 transition duration-200 lg:static lg:flex
+      justify-center gap-4 bg-amber-300 transition duration-200 lg:static lg:flex
 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
     >
       <li>
@@ -40,7 +41,25 @@ lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
       </li>
       <li>
         <NavLink :close="close" to="/logout">
-          <Icon name="bx:log-out" :size="iconSize" :class="iconClass" />
+          <Icon
+            name="carbon:user-avatar-filled"
+            :size="iconSize"
+            :class="iconClass"
+          />
+          Profile
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          :close="close"
+          to="/logout"
+          class="hover:bg-red-500 hover:text-neutral-100"
+        >
+          <Icon
+            name="fa-solid:sign-out-alt"
+            :size="iconSize"
+            :class="iconClass"
+          />
           Logout
         </NavLink>
       </li>
