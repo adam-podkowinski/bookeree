@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-zinc-900 text-neutral-100">
+    <ClientOnly>
+      <LoginComp />
+    </ClientOnly>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
