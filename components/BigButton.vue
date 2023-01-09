@@ -5,6 +5,7 @@
 </template>
 <style lang="postcss">
 .button {
-  @apply rounded-lg px-6 py-3 text-xl font-medium tracking-wide transition lg:px-12;
+  @apply rounded-xl px-6 py-3 text-xl font-medium tracking-wide transition hover:underline
+  lg:px-16 lg:py-4;
 }
 </style>

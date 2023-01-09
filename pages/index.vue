@@ -28,7 +28,7 @@
         class="flex w-full flex-col items-stretch justify-center gap-6 lg:flex-row"
       >
         <BigButton
-          class="w-full border-4 border-amber-300 bg-amber-300 text-zinc-900 hover:border-amber-200 hover:bg-amber-200 lg:w-auto"
+          class="w-full bg-gradient-to-r from-amber-300 to-orange-400 text-zinc-900 shadow-xl shadow-orange-400/20 duration-1000 hover:shadow-none lg:w-auto"
           >Sign Up</BigButton
         >
         <BigButton
@@ -58,8 +58,7 @@
             size="3rem"
             class="text-yellow-300"
           />
-          Rate books from <br />
-          1-5 stars
+          Rate books from 1-5 stars
         </div>
         <div class="perk">
           <Icon
@@ -77,6 +76,6 @@
 <style lang="postcss">
 .perk {
   @apply grid gap-6 rounded-lg border-2 border-amber-300 bg-zinc-800 px-8 py-12 text-justify
-  text-lg font-medium tracking-wide shadow-2xl shadow-amber-300/5 lg:px-16 lg:text-xl;
+  text-lg font-medium tracking-wide shadow-2xl shadow-amber-300/10 lg:px-16 lg:text-2xl;
 }
 </style>

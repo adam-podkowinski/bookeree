@@ -4,7 +4,7 @@ const settings = useSettingsStore();
 </script>
 <template>
   <header
-    class="x-padding sticky top-0 mb-16 flex items-center justify-between bg-amber-300 py-7 text-zinc-800 shadow-md shadow-amber-300/5"
+    class="x-padding sticky top-0 mb-16 flex items-center justify-between bg-amber-300 py-5 text-zinc-800 shadow-md shadow-amber-300/5 lg:py-7"
   >
     <NuxtLink
       to="/"
