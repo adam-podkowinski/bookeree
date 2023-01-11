@@ -1,11 +1,56 @@
 <script lang="ts" setup>
 import { useSettingsStore } from "@/store/settings";
-const iconSize = "1.3em";
-const iconClass = "hover:animate-ping";
+
+interface NavOptions {
+  title: string;
+  icon: string;
+  link?: string;
+  onClick?: () => void;
+}
+
 const settings = useSettingsStore();
+const session = useSession();
 const navClass = computed(() =>
   settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
 );
+
+const loggedInOptions: NavOptions[] = [
+  { title: "My Books", icon: "ph:books-bold", link: "/books" },
+  { title: "Add a Book", icon: "bx:bxs-book-add", link: "/add" },
+  { title: "Profile", icon: "carbon:user-avatar-filled", link: "/profile" },
+  {
+    title: "Logout",
+    icon: "fa-solid:sign-out-alt",
+    onClick: async () => {
+      // ADD ON SERVER SIDE AND REQUEST A SERVER ENDPOINT THAT FETCHES THAT URL TO LOGOUT
+      // FROM AUTH0
+      /* await fetch("tenant/v2/logout", { */
+      /*   credentials: "include", */
+      /*   mode: "no-cors", */
+      /* }); */
+      await session.signOut({ callbackUrl: "/" });
+    },
+  },
+];
+
+const loggedOffOptions = computed<NavOptions[]>(() => [
+  {
+    title: "Sign In",
+    icon: "carbon:two-factor-authentication",
+    onClick: () => session.signIn("auth0", { callbackUrl: "/" }),
+  },
+  {
+    title: "Sign Up",
+    icon: "fluent-mdl2:signin",
+    onClick: () => session.signIn("auth0", { callbackUrl: "/" }),
+  },
+]);
+
+const options = computed(() => {
+  return session.status.value === "authenticated"
+    ? loggedInOptions
+    : loggedOffOptions.value;
+});
 </script>
 <template>
   <nav>
@@ -30,37 +75,8 @@ const navClass = computed(() =>
       justify-center gap-4 bg-amber-300 transition duration-200 lg:static lg:flex
 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
     >
-      <li>
-        <NavLink to="/books">
-          <Icon name="ph:books-bold" :size="iconSize" :class="iconClass" />
-          My Books
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/add">
-          <Icon name="bx:bxs-book-add" :size="iconSize" :class="iconClass" />
-          Add a Book
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/logout">
-          <Icon
-            name="carbon:user-avatar-filled"
-            :size="iconSize"
-            :class="iconClass"
-          />
-          Profile
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/logout" class="hover:bg-red-500 hover:text-neutral-100">
-          <Icon
-            name="fa-solid:sign-out-alt"
-            :size="iconSize"
-            :class="iconClass"
-          />
-          Logout
-        </NavLink>
+      <li v-for="{ icon, link, title, onClick } of options" :key="link">
+        <NavItem :icon="icon" :link="link" :title="title" :on-click="onClick" />
       </li>
     </ul>
   </nav>

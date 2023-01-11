@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const session = useSession();
+</script>
+
 <template>
   <div class="text-center">
     <div class="flex flex-col items-center justify-center gap-12 text-center">
@@ -25,21 +29,25 @@
         </div>
       </h1>
       <div
+        v-if="session.status.value === 'unauthenticated'"
         class="flex w-full flex-col items-stretch justify-center gap-6 lg:flex-row"
       >
         <BigButton
-          class="w-full bg-gradient-to-r from-amber-300 to-orange-400 text-zinc-900 shadow-xl shadow-orange-400/20 duration-1000 hover:shadow-none lg:w-auto"
+          class="w-full bg-gradient-to-r from-amber-300 to-orange-400 text-zinc-900 shadow-xl shadow-orange-400/20 duration-1000 hover:translate-y-0.5 hover:shadow-none lg:w-auto"
+          @click="session.signIn('auth0')"
           >Sign Up</BigButton
         >
         <BigButton
           class="w-full border-4 border-orange-300 bg-orange-300/10 hover:bg-orange-300 hover:text-zinc-900 lg:w-auto"
+          @click="session.signIn('auth0')"
           >Login</BigButton
         >
       </div>
     </div>
     <main class="mt-12 lg:mt-20">
-      <h2 class="text-xl font-semibold lg:text-3xl">
-        What can you do with Bookeree?
+      <h2 class="grid gap-2 text-xl font-medium lg:text-3xl">
+        <p>What can you do with <strong>Bookeree</strong>?</p>
+        It's all completely free!
       </h2>
       <div
         class="mt-6 grid grid-cols-1 gap-6 px-2 text-start lg:mt-10 lg:grid-cols-2 lg:gap-12 lg:px-24"
