@@ -21,11 +21,13 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.2",
     "prettier-plugin-tailwindcss": "^0.2.1",
+    "prisma": "^4.8.1",
     "typescript": "^4.9.4"
   },
   "dependencies": {
     "@auth0/auth0-vue": "^1.0.2",
     "@pinia/nuxt": "^0.4.6",
+    "@prisma/client": "^4.8.1",
     "nuxt-icon": "^0.1.8",
     "pinia": "^2.0.28"
   }
