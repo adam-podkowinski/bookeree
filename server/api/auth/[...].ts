@@ -7,7 +7,7 @@ export default NuxtAuthHandler({
     Auth0Provider.default({
       clientId: useRuntimeConfig().clientId,
       clientSecret: useRuntimeConfig().clientSecret,
-      issuer: useRuntimeConfig().issuer,
+      issuer: useRuntimeConfig().public.issuer,
     }),
   ],
 });

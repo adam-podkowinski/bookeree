@@ -22,12 +22,10 @@ const loggedInOptions: NavOptions[] = [
     title: "Logout",
     icon: "fa-solid:sign-out-alt",
     onClick: async () => {
-      // ADD ON SERVER SIDE AND REQUEST A SERVER ENDPOINT THAT FETCHES THAT URL TO LOGOUT
-      // FROM AUTH0
-      /* await fetch("tenant/v2/logout", { */
-      /*   credentials: "include", */
-      /*   mode: "no-cors", */
-      /* }); */
+      await fetch(`${useRuntimeConfig().public.issuer}/v2/logout`, {
+        credentials: "include",
+        mode: "no-cors",
+      });
       await session.signOut({ callbackUrl: "/" });
     },
   },

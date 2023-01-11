@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    issuer: process.env.ISSUER,
+    public: {
+      issuer: process.env.ISSUER,
+    },
   },
   modules: [
     "@nuxtjs/tailwindcss",
