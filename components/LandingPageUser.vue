@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const session = useSession();
-const user = computed(() => {
-  return session.data.value?.user;
-});
+const user = useSupabaseUser();
+const signedIn = computed(() => user !== undefined);
 </script>
 <template>
   <div class="grid gap-10">
@@ -22,14 +20,15 @@ const user = computed(() => {
       <p>Welcome back,</p>
       <div class="flex items-center">
         <img
-          :src="user?.image || ''"
           class="mr-3 h-12 rounded-lg object-contain drop-shadow-xl lg:ml-6"
+          v-if="signedIn"
+          :src="user?.identities?.at(0)?.identity_data.avatar_url"
           alt="User"
         />
         <span
           class="bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent"
         >
-          {{ session.data.value?.user?.name }}!
+          {{ user?.identities?.at(0)?.identity_data.name }}
         </span>
       </div>
     </h1>
@@ -55,7 +54,6 @@ const user = computed(() => {
 <style lang="postcss" scoped>
 .button {
   @apply w-full rounded-xl bg-amber-300 px-8 py-5 font-semibold
-    text-zinc-900 shadow-md shadow-amber-300/20 duration-300 hover:-translate-y-0.5
-  lg:w-auto;
+    text-zinc-900 shadow-md shadow-amber-300/20 duration-300 hover:-translate-y-0.5 lg:w-auto;
 }
 </style>

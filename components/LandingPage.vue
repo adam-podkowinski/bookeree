@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const session = useSession();
+const auth = useSupabaseAuthClient();
+const login = () => auth.auth.signInWithOAuth({ provider: "google" });
 </script>
 <template>
   <div class="grid place-items-center gap-8 text-center lg:gap-12">
@@ -27,13 +28,13 @@ const session = useSession();
     >
       <BigButton
         class="w-full bg-gradient-to-r from-amber-300 to-orange-400 text-zinc-900 shadow-xl shadow-orange-400/20 hover:translate-y-0.5 hover:shadow-none lg:w-auto"
-        @click="session.signIn('auth0')"
+        @click="login"
       >
         Sign Up
       </BigButton>
       <BigButton
         class="w-full border-4 border-orange-300 bg-orange-300/10 hover:bg-orange-300 hover:text-zinc-900 lg:w-auto"
-        @click="session.signIn('auth0')"
+        @click="login"
       >
         Login
       </BigButton>

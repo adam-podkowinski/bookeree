@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ middleware: "auth" });
+
 interface Book {
   title: string;
   subtitle: string;
@@ -43,8 +45,6 @@ const {
     transform: (d: any) => d.items.map(mapItemToBook),
   }
 );
-
-definePageMeta({ middleware: "auth" });
 </script>
 <template>
   <div>

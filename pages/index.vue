@@ -1,11 +1,10 @@
 <script setup lang="ts">
-const session = useSession();
-const authenticated = computed(() => session.status.value === "authenticated");
+const user = useSupabaseUser();
 </script>
 
 <template>
   <main>
-    <LandingPageUser v-if="authenticated" />
-    <LandingPage v-else />
+    <LandingPage v-if="user == undefined" />
+    <LandingPageUser v-else />
   </main>
 </template>

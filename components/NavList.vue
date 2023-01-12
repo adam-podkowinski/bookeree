@@ -9,7 +9,8 @@ interface NavOptions {
 }
 
 const settings = useSettingsStore();
-const session = useSession();
+const session = useSupabaseAuthClient();
+const user = useSupabaseUser();
 const navClass = computed(() =>
   settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
 );
@@ -21,13 +22,7 @@ const loggedInOptions: NavOptions[] = [
   {
     title: "Logout",
     icon: "fa-solid:sign-out-alt",
-    onClick: async () => {
-      await fetch(`${useRuntimeConfig().public.issuer}/v2/logout`, {
-        credentials: "include",
-        mode: "no-cors",
-      });
-      await session.signOut({ callbackUrl: "/" });
-    },
+    onClick: () => session.auth.signOut(),
   },
 ];
 
@@ -35,19 +30,29 @@ const loggedOffOptions = computed<NavOptions[]>(() => [
   {
     title: "Sign In",
     icon: "carbon:two-factor-authentication",
-    onClick: () => session.signIn("auth0", { callbackUrl: "/" }),
+    onClick: () =>
+      session.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: "/",
+        },
+      }),
   },
   {
     title: "Sign Up",
     icon: "fluent-mdl2:signin",
-    onClick: () => session.signIn("auth0", { callbackUrl: "/" }),
+    onClick: () =>
+      session.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: "/",
+        },
+      }),
   },
 ]);
 
 const options = computed(() => {
-  return session.status.value === "authenticated"
-    ? loggedInOptions
-    : loggedOffOptions.value;
+  return !user.value ? loggedOffOptions.value : loggedInOptions;
 });
 </script>
 <template>

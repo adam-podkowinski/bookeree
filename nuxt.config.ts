@@ -1,17 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  runtimeConfig: {
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    public: {
-      issuer: process.env.ISSUER,
-    },
-  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "nuxt-icon",
-    "@sidebase/nuxt-auth",
+    "@nuxtjs/supabase",
   ],
   app: {
     pageTransition: {
