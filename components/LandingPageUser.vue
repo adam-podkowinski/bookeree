@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { books } from "@prisma/client";
 const user = useSupabaseUser();
 const signedIn = computed(() => user !== undefined);
+const { data } = await useFetchCookie<books[] | null>("/api/books");
 </script>
 <template>
   <div class="grid gap-10">
@@ -20,8 +22,8 @@ const signedIn = computed(() => user !== undefined);
       <p>Welcome back,</p>
       <div class="flex items-center">
         <img
-          class="mr-3 h-12 rounded-lg object-contain drop-shadow-xl lg:ml-6"
           v-if="signedIn"
+          class="mr-3 h-12 rounded-lg object-contain drop-shadow-xl lg:ml-6"
           :src="user?.identities?.at(0)?.identity_data.avatar_url"
           alt="User"
         />
@@ -32,9 +34,14 @@ const signedIn = computed(() => user !== undefined);
         </span>
       </div>
     </h1>
-    <p class="flex flex-col gap-1 text-2xl tracking-wide lg:flex-row lg:gap-3">
+    <p
+      v-if="data"
+      class="flex flex-col gap-1 text-2xl tracking-wide lg:flex-row lg:gap-3"
+    >
       <span>You currently have</span>
-      <span class="font-semibold text-amber-300">3 books</span>
+      <span class="font-semibold text-amber-300">
+        {{ data.length }} {{ data.length === 1 ? "book" : "books" }}
+      </span>
       <span> in Your personal library. 😁</span>
     </p>
     <div
@@ -43,7 +50,7 @@ const signedIn = computed(() => user !== undefined);
       <NuxtLink class="button" to="/books">
         <Icon name="ph:books-bold" size="1.3em" /> My Books
       </NuxtLink>
-      <NuxtLink class="button" to="/add">
+      <NuxtLink class="button" to="/find">
         <Icon name="ic:baseline-search" size="1.3em" />
         Find a Book
       </NuxtLink>

@@ -17,7 +17,7 @@ const navClass = computed(() =>
 
 const loggedInOptions: NavOptions[] = [
   { title: "My Books", icon: "ph:books-bold", link: "/books" },
-  { title: "Add a Book", icon: "bx:bxs-book-add", link: "/add" },
+  { title: "Find a Book", icon: "ic:baseline-search", link: "/find" },
   { title: "Profile", icon: "carbon:user-avatar-filled", link: "/profile" },
   {
     title: "Logout",

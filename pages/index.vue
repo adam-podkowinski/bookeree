@@ -4,7 +4,9 @@ const user = useSupabaseUser();
 
 <template>
   <main>
-    <LandingPage v-if="user == undefined" />
-    <LandingPageUser v-else />
+    <transition name="page" mode="out-in">
+      <LandingPage v-if="user == undefined" />
+      <LandingPageUser v-else />
+    </transition>
   </main>
 </template>
