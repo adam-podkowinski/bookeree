@@ -17,6 +17,30 @@ interface Book {
   buyLink: string | undefined;
 }
 
+const books = ref<Book[]>([]);
+
+const { data: dbBooks } = useLazyFetch("/api/books", {
+  headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+});
+
+watch(
+  dbBooks,
+  (newBooks) => {
+    newBooks?.forEach(async (b) => {
+      const data: any = await (
+        await fetch(
+          `https://www.googleapis.com/books/v1/volumes/${b.google_id}`
+        )
+      ).json();
+      const bookToAdd = mapItemToBook(data);
+      books.value.push(bookToAdd);
+      // Remove a book from the old list to get rid of duplicates
+      dbBooks.value?.splice(dbBooks.value.indexOf(b));
+    });
+  },
+  { immediate: true }
+);
+
 const mapItemToBook = (item: any): Book => {
   return {
     id: item.id,
@@ -34,22 +58,11 @@ const mapItemToBook = (item: any): Book => {
     },
   };
 };
-
-const {
-  data: books,
-  pending,
-  error,
-} = await useLazyFetch<Book[]>(
-  'https://www.googleapis.com/books/v1/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en',
-  {
-    transform: (d: any) => d.items.map(mapItemToBook),
-  }
-);
 </script>
 <template>
   <div>
     <h1>Books</h1>
-    <ul v-if="!pending && !error && books && books.length > 0">
+    <ul v-if="books">
       <li v-for="(book, index) in books" :key="index">
         <h1 class="text-xl">{{ book.title }}:</h1>
         <img v-if="book.thumbnail" :src="book.thumbnail" :alt="book.title" />

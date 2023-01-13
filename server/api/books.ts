@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
 export default defineEventHandler(async (event) => {
-  if (!event.context.authenticated) return (event.node.res.statusCode = 401);
-  const booksDb = await prisma.users
-    .findFirst({ where: { id: event.context.user.id } })
-    .books();
+  if (!event.context.authenticated) throw new Error('Unauthenticated');
+  const booksDb = await prisma.books
+    .findMany({ where: { user_id: event.context.user.id } })
   return booksDb;
 });

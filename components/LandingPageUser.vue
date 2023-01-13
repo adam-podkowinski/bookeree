@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { books } from "@prisma/client";
 const user = useSupabaseUser();
-const signedIn = computed(() => user !== undefined);
-const { data } = await useFetchCookie<books[] | null>("/api/books");
+const { data: books } = await useLazyFetch("/api/books", {
+  key: `books for ${user.value?.id}`,
+  headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+});
 </script>
 <template>
   <div class="grid gap-10">
@@ -22,7 +23,6 @@ const { data } = await useFetchCookie<books[] | null>("/api/books");
       <p>Welcome back,</p>
       <div class="flex items-center">
         <img
-          v-if="signedIn"
           class="mr-3 h-12 rounded-lg object-contain drop-shadow-xl lg:ml-6"
           :src="user?.identities?.at(0)?.identity_data.avatar_url"
           alt="User"
@@ -30,17 +30,17 @@ const { data } = await useFetchCookie<books[] | null>("/api/books");
         <span
           class="bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent"
         >
-          {{ user?.identities?.at(0)?.identity_data.name }}
+          {{ user?.identities?.at(0)?.identity_data.name.split(" ")[0] }}
         </span>
       </div>
     </h1>
     <p
-      v-if="data"
+      v-if="books"
       class="flex flex-col gap-1 text-2xl tracking-wide lg:flex-row lg:gap-3"
     >
       <span>You currently have</span>
       <span class="font-semibold text-amber-300">
-        {{ data.length }} {{ data.length === 1 ? "book" : "books" }}
+        {{ books.length }} {{ books.length === 1 ? "book" : "books" }}
       </span>
       <span> in Your personal library. 😁</span>
     </p>
