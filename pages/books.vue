@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: "auth" });
 
+const GOOGLE_URL = "https://www.googleapis.com/books/v1";
+
 interface Book {
   title: string;
   subtitle: string;
@@ -10,6 +12,7 @@ interface Book {
   pageCount: number;
   authors: string[];
   description: string;
+  createdAt: Date;
   price: {
     amount: number;
     currencyCode: string;
@@ -17,31 +20,32 @@ interface Book {
   buyLink: string | undefined;
 }
 
+const user = useSupabaseUser();
+
 const books = ref<Book[]>([]);
 
+const sortedBooks = computed(() => {
+  return books.value.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+});
+
 const { data: dbBooks } = useLazyFetch("/api/books", {
+  key: `books for ${user.value?.id}`,
   headers: useRequestHeaders(["Cookie"]) as HeadersInit,
 });
 
 watch(
-  dbBooks,
-  (newBooks) => {
-    newBooks?.forEach(async (b) => {
-      const data: any = await (
-        await fetch(
-          `https://www.googleapis.com/books/v1/volumes/${b.google_id}`
-        )
-      ).json();
-      const bookToAdd = mapItemToBook(data);
+  () => dbBooks,
+  () => {
+    dbBooks.value?.forEach(async (b) => {
+      const data = await $fetch(`${GOOGLE_URL}/volumes/${b.volume_id}`);
+      const bookToAdd = mapItemToBook(data, b.created_at);
       books.value.push(bookToAdd);
-      // Remove a book from the old list to get rid of duplicates
-      dbBooks.value?.splice(dbBooks.value.indexOf(b));
     });
   },
   { immediate: true }
 );
 
-const mapItemToBook = (item: any): Book => {
+const mapItemToBook = (item: any, createdAt: Date): Book => {
   return {
     id: item.id,
     title: item.volumeInfo.title,
@@ -52,6 +56,7 @@ const mapItemToBook = (item: any): Book => {
     pageCount: item.volumeInfo.pageCount,
     thumbnail: item.volumeInfo.imageLinks.thumbnail,
     buyLink: item.saleInfo.buyLink,
+    createdAt,
     price: {
       amount: item.saleInfo.retailPrice.amount,
       currencyCode: item.saleInfo.retailPrice.currencyCode,
@@ -63,7 +68,7 @@ const mapItemToBook = (item: any): Book => {
   <div>
     <h1>Books</h1>
     <ul v-if="books">
-      <li v-for="(book, index) in books" :key="index">
+      <li v-for="book in sortedBooks" :key="book.id">
         <h1 class="text-xl">{{ book.title }}:</h1>
         <img v-if="book.thumbnail" :src="book.thumbnail" :alt="book.title" />
         <p class="text-lg">

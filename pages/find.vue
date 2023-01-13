@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: "auth" });
 
+const GOOGLE_URL = "https://www.googleapis.com/books/v1";
+
 interface Book {
   title: string;
   subtitle: string;
@@ -40,7 +42,7 @@ const {
   pending,
   error,
 } = await useLazyFetch<Book[]>(
-  'https://www.googleapis.com/books/v1/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en',
+  `${GOOGLE_URL}/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en`,
   {
     transform: (d: any) => d.items.map(mapItemToBook),
   }
