@@ -1,6 +1,7 @@
 <script setup lang="ts">
+definePageMeta({ middleware: "auth" });
 const user = useSupabaseUser();
-const { data: books } = await useFetch("/api/books", {
+const { data: books } = useLazyFetch("/api/books", {
   key: `books for ${user.value?.id}`,
   headers: useRequestHeaders(["Cookie"]) as HeadersInit,
 });

@@ -37,11 +37,7 @@ const mapItemToBook = (item: any): Book => {
   };
 };
 
-const {
-  data: books,
-  pending,
-  error,
-} = await useFetch<Book[]>(
+const { data: books } = await useLazyFetch<Book[]>(
   `${GOOGLE_URL}/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en`,
   {
     transform: (d: any) => d.items.map(mapItemToBook),
@@ -51,7 +47,7 @@ const {
 <template>
   <div>
     <h1>Books</h1>
-    <ul v-if="!pending && !error && books && books.length > 0">
+    <ul v-if="books">
       <li v-for="(book, index) in books" :key="index">
         <h1 class="text-xl">{{ book.title }}:</h1>
         <img v-if="book.thumbnail" :src="book.thumbnail" :alt="book.title" />

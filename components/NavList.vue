@@ -9,6 +9,7 @@ interface NavOptions {
 }
 
 const settings = useSettingsStore();
+const router = useRouter();
 const session = useSupabaseAuthClient();
 const user = useSupabaseUser();
 const navClass = computed(() =>
@@ -22,35 +23,27 @@ const loggedInOptions: NavOptions[] = [
   {
     title: "Logout",
     icon: "fa-solid:sign-out-alt",
-    onClick: () => {
-      session.auth.signOut();
-      navigateTo("/", { replace: true });
+    onClick: async () => {
+      await session.auth.signOut();
+      // Needs a timeout to update user on /
+      setTimeout(() => router.replace("/"), 200);
     },
   },
 ];
+
+const signInWithGoogle = () =>
+  session.auth.signInWithOAuth({ provider: "google" });
 
 const loggedOffOptions = computed<NavOptions[]>(() => [
   {
     title: "Sign In",
     icon: "carbon:two-factor-authentication",
-    onClick: () =>
-      session.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: "/",
-        },
-      }),
+    onClick: signInWithGoogle,
   },
   {
     title: "Sign Up",
     icon: "fluent-mdl2:signin",
-    onClick: () =>
-      session.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: "/",
-        },
-      }),
+    onClick: signInWithGoogle,
   },
 ]);
 
