@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const user = useSupabaseUser();
-const { data: books } = await useLazyFetch("/api/books", {
+const { data: books } = await useFetch("/api/books", {
   key: `books for ${user.value?.id}`,
   headers: useRequestHeaders(["Cookie"]) as HeadersInit,
 });

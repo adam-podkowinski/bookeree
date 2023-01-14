@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const user = useSupabaseUser();
+// TODO: Use "/dashboard" for LandingPageUser and always use "/" for LandingPage
 </script>
 
 <template>

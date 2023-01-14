@@ -28,7 +28,8 @@ const sortedBooks = computed(() => {
   return books.value.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
 });
 
-const { data: dbBooks } = useLazyFetch("/api/books", {
+// TODO: move to a separate composable
+const { data: dbBooks } = await useFetch("/api/books", {
   key: `books for ${user.value?.id}`,
   headers: useRequestHeaders(["Cookie"]) as HeadersInit,
 });

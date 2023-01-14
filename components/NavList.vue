@@ -22,7 +22,10 @@ const loggedInOptions: NavOptions[] = [
   {
     title: "Logout",
     icon: "fa-solid:sign-out-alt",
-    onClick: () => session.auth.signOut(),
+    onClick: () => {
+      session.auth.signOut();
+      navigateTo("/", { replace: true });
+    },
   },
 ];
 

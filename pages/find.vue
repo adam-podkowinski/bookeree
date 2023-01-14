@@ -41,7 +41,7 @@ const {
   data: books,
   pending,
   error,
-} = await useLazyFetch<Book[]>(
+} = await useFetch<Book[]>(
   `${GOOGLE_URL}/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en`,
   {
     transform: (d: any) => d.items.map(mapItemToBook),
