@@ -24,10 +24,7 @@ const getBooksText = computed(() => {
     <transition name="page">
       <div v-if="books" class="flex flex-col">
         <div
-          class="mb-6 flex flex-col items-center justify-between gap-3 self-center
-          rounded-xl border-2 border-zinc-700/60 bg-zinc-800 px-6 py-3 text-center
-          text-lg font-black tracking-wide text-orange-100 shadow-md lg:flex-row
-          lg:gap-6 lg:text-xl hover:bg-zinc-600/40 transition-colors"
+          class="mb-6 flex flex-col items-center justify-between gap-3 self-center rounded-xl border-2 border-zinc-700/60 bg-zinc-800 px-6 py-3 text-center text-lg font-black tracking-wide text-orange-100 shadow-md transition-colors hover:bg-zinc-600/40 lg:flex-row lg:gap-6 lg:text-xl"
         >
           <div class="flex flex-col text-xl lg:flex-row lg:gap-2">
             <h1 class="">Your library:</h1>
