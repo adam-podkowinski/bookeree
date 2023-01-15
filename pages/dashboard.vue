@@ -62,6 +62,6 @@ const { data: length } = useLazyFetch("/api/books/length", {
 <style lang="postcss" scoped>
 .button {
   @apply w-full rounded-xl bg-amber-300 px-8 py-5 font-semibold
-    text-zinc-900 duration-300 hover:-translate-y-0.5 lg:w-auto;
+    text-zinc-900 duration-300 hover:-translate-y-0.5 text-xl lg:w-auto;
 }
 </style>
