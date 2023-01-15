@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Book } from "@/utils/Book";
+import type { Book } from "@/types";
 defineProps<Book>();
 </script>
 <template>
   <div
-    class="relative flex h-full flex-col gap-3 rounded-lg border-2 border-zinc-700/60 bg-zinc-800 p-4 shadow-lg shadow-zinc-800/30 transition hover:bg-zinc-600/40"
+    class="relative flex h-full flex-col gap-3 rounded-lg border-2 border-zinc-700/60 bg-zinc-800 p-4 shadow-lg shadow-zinc-800/30 transition hover:-translate-y-0.5 hover:bg-zinc-600/40"
   >
     <NuxtLink :to="`/books/${id}`">
       <img
@@ -24,7 +24,7 @@ defineProps<Book>();
         <span v-for="author in authors" :key="author">{{ author }} </span>
       </h2>
     </NuxtLink>
-    <div class="mt-2 cursor-auto rounded-lg bg-zinc-900/50 p-4">
+    <div class="mt-auto cursor-auto rounded-lg bg-zinc-900/30 p-4">
       <div
         class="mb-4 flex items-center justify-center gap-3 text-center text-xl font-semibold"
       >
@@ -32,7 +32,7 @@ defineProps<Book>();
         <select
           id="status"
           name="status"
-          class="rounded-lg bg-amber-300 p-0.5 text-zinc-900"
+          class="rounded-lg bg-orange-300 p-0.5 text-zinc-900"
         >
           <option value="read">Read</option>
           <option value="reading">Reading</option>
@@ -40,7 +40,7 @@ defineProps<Book>();
         </select>
       </div>
       <button
-        class="w-full rounded-lg bg-red-400 py-3 font-semibold text-zinc-900 shadow-lg shadow-amber-300/10 transition duration-300 hover:bg-red-500 hover:shadow-red-500/10"
+        class="w-full rounded-lg bg-rose-500 py-3 font-semibold text-white shadow-md shadow-red-300/10 transition duration-300 hover:bg-rose-600 hover:shadow-red-500/10"
       >
         Remove
       </button>

@@ -1,10 +1,10 @@
 export default defineNuxtConfig({
   modules: [
+    "@vue-macros/nuxt",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "nuxt-icon",
     "@nuxtjs/supabase",
-    "@vue-macros/nuxt",
   ],
   app: {
     pageTransition: {

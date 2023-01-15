@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   if (!event.context.authenticated) throw new Error("Unauthenticated");
-  const booksDb = await prisma.books.findMany({
-    where: { user_id: event.context.user.id },
+  const bookDb = await prisma.books.findFirst({
+    where: { user_id: event.context.user.id, id: BigInt(event.context.params.id)},
   });
-  const booksPromise = booksDb.map(transformBook);
-  const books = await Promise.all(booksPromise);
-  return books;
+  if (!bookDb) return new Error("Not found!");
+  const bookPromise = transformBook(bookDb);
+  const book = await bookPromise;
+  return book;
 });
