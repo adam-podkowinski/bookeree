@@ -12,11 +12,11 @@
 .page-enter-active,
 .page-leave-active,
 .page-appear-active {
-  @apply transition duration-200;
+  @apply transition-all duration-200;
 }
 .page-enter-from,
 .page-leave-to,
 .page-appear-from {
-  @apply opacity-0;
+  @apply opacity-0 translate-y-1;
 }
 </style>

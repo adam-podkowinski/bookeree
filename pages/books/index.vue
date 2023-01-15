@@ -56,7 +56,7 @@ const getBooksText = computed(() => {
           </div>
         </div>
         <ul class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          <li v-for="book in sortedBooks" :key="book.id">
+          <li v-for="book in sortedBooks" :key="book.id.toString()">
             <TheBook v-bind="book" />
           </li>
         </ul>

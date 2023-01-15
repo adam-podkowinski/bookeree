@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
+  typescript: {
+    shim: false,
+    strict: true,
+    typeCheck: true,
+  },
   app: {
     pageTransition: {
       mode: "out-in",
