@@ -3,12 +3,10 @@ import { Book } from "@/utils/Book";
 defineProps<Book>();
 </script>
 <template>
-  <NuxtLink
-    class="relative flex h-full flex-col gap-3 rounded-lg border-2 border-zinc-700/60
-    bg-zinc-800 p-4 shadow-lg shadow-zinc-800/30 hover:bg-zinc-600/40 transition"
-    :to="`/books/${id}`"
+  <div
+    class="relative flex h-full flex-col gap-3 rounded-lg border-2 border-zinc-700/60 bg-zinc-800 p-4 shadow-lg shadow-zinc-800/30 transition hover:bg-zinc-600/40"
   >
-    <div>
+    <NuxtLink :to="`/books/${id}`">
       <img
         :src="thumbnail"
         :alt="title"
@@ -25,11 +23,8 @@ defineProps<Book>();
       <h2 class="mt-1 text-lg tracking-wide text-orange-100/80">
         <span v-for="author in authors" :key="author">{{ author }} </span>
       </h2>
-    </div>
-    <div
-      class="mt-2 cursor-auto rounded-lg bg-zinc-900/50 p-4"
-      @click.stop.prevent
-    >
+    </NuxtLink>
+    <div class="mt-2 cursor-auto rounded-lg bg-zinc-900/50 p-4">
       <div
         class="mb-4 flex items-center justify-center gap-3 text-center text-xl font-semibold"
       >
@@ -45,11 +40,10 @@ defineProps<Book>();
         </select>
       </div>
       <button
-        class="pointer-events-auto w-full rounded-lg bg-red-400 py-3 font-semibold text-zinc-900 shadow-lg shadow-amber-300/10 transition duration-300 hover:bg-red-500 hover:shadow-red-500/10"
-        @click.stop.prevent
+        class="w-full rounded-lg bg-red-400 py-3 font-semibold text-zinc-900 shadow-lg shadow-amber-300/10 transition duration-300 hover:bg-red-500 hover:shadow-red-500/10"
       >
         Remove
       </button>
     </div>
-  </NuxtLink>
+  </div>
 </template>
