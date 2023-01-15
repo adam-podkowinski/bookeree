@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
-const router = useRouter();
 
 watchEffect(() => {
   if (user.value) {
-    router.replace("/landing");
+    navigateTo("/landing", { replace: true });
   }
 });
 
@@ -35,7 +34,6 @@ const login = () => {
       </div>
     </h1>
     <div
-      v-if="!user"
       class="flex w-full flex-col items-stretch justify-center gap-6 lg:flex-row"
     >
       <BigButton

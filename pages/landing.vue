@@ -1,8 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: "auth" });
 const user = useSupabaseUser();
-const { data: books } = useLazyFetch("/api/books", {
-  key: `books for ${user.value?.id}`,
+const { data: length } = useLazyFetch("/api/books/length", {
+  key: `books length for ${user.value?.id}`,
   headers: useRequestHeaders(["Cookie"]) as HeadersInit,
 });
 </script>
@@ -36,12 +36,12 @@ const { data: books } = useLazyFetch("/api/books", {
       </div>
     </h1>
     <p
-      v-if="books"
+      v-if="length"
       class="flex flex-col gap-1 text-2xl tracking-wide lg:flex-row lg:gap-3"
     >
       <span>You currently have</span>
       <span class="font-semibold text-amber-300">
-        {{ books.length }} {{ books.length === 1 ? "book" : "books" }}
+        {{ length }} {{ length === 1 ? "book" : "books" }}
       </span>
       <span> in Your personal library. 😁</span>
     </p>
@@ -51,9 +51,9 @@ const { data: books } = useLazyFetch("/api/books", {
       <NuxtLink class="button" to="/books">
         <Icon name="ph:books-bold" size="1.3em" /> My Books
       </NuxtLink>
-      <NuxtLink class="button" to="/find">
-        <Icon name="ic:baseline-search" size="1.3em" />
-        Find a Book
+      <NuxtLink class="button transition-all" to="/find">
+        <Icon name="material-symbols:add" size="1.3em" />
+        Add a Book
       </NuxtLink>
     </div>
   </div>
@@ -62,6 +62,6 @@ const { data: books } = useLazyFetch("/api/books", {
 <style lang="postcss" scoped>
 .button {
   @apply w-full rounded-xl bg-amber-300 px-8 py-5 font-semibold
-    text-zinc-900 shadow-md shadow-amber-300/20 duration-300 hover:-translate-y-0.5 lg:w-auto;
+    text-zinc-900 duration-300 hover:-translate-y-0.5 lg:w-auto;
 }
 </style>

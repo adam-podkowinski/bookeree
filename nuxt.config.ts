@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-icon",
     "@nuxtjs/supabase",
+    "@vue-macros/nuxt",
   ],
   app: {
     pageTransition: {

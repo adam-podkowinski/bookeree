@@ -5,7 +5,7 @@ const user = useSupabaseUser();
 </script>
 <template>
   <header
-    class="x-padding sticky top-0 mb-16 flex items-center justify-between bg-amber-300 py-5 text-zinc-800 shadow-md shadow-amber-300/5 lg:py-7"
+    class="x-padding sticky top-0 z-[999] mb-10 flex items-center justify-between bg-amber-300 py-5 text-zinc-800 shadow-md shadow-amber-300/5 lg:py-7"
   >
     <NuxtLink
       :to="user ? '/landing' : '/'"

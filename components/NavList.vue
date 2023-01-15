@@ -9,7 +9,6 @@ interface NavOptions {
 }
 
 const settings = useSettingsStore();
-const router = useRouter();
 const session = useSupabaseAuthClient();
 const user = useSupabaseUser();
 const navClass = computed(() =>
@@ -18,7 +17,7 @@ const navClass = computed(() =>
 
 const loggedInOptions: NavOptions[] = [
   { title: "My Books", icon: "ph:books-bold", link: "/books" },
-  { title: "Find a Book", icon: "ic:baseline-search", link: "/find" },
+  { title: "Add a Book", icon: "material-symbols:add", link: "/find" },
   { title: "Profile", icon: "carbon:user-avatar-filled", link: "/profile" },
   {
     title: "Logout",
@@ -26,7 +25,7 @@ const loggedInOptions: NavOptions[] = [
     onClick: async () => {
       await session.auth.signOut();
       // Needs a timeout to update user on /
-      setTimeout(() => router.replace("/"), 200);
+      setTimeout(() => navigateTo("/", { replace: true }), 200);
     },
   },
 ];

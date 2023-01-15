@@ -1,21 +1,5 @@
 import { books, PrismaClient } from "@prisma/client";
-
-interface Book {
-  title: string;
-  subtitle: string;
-  id: string;
-  thumbnail: string;
-  averageRating: number;
-  pageCount: number;
-  authors: string[];
-  description: string;
-  createdAt: Date;
-  price: {
-    amount: number;
-    currencyCode: string;
-  };
-  buyLink: string | undefined;
-}
+import { Book } from "@/utils/Book";
 
 const transformBook = async (item: books): Promise<Book> => {
   const data: any = await $fetch(`${GOOGLE_URL}/volumes/${item.volume_id}`);

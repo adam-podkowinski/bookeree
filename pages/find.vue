@@ -3,23 +3,7 @@ definePageMeta({ middleware: "auth" });
 
 const GOOGLE_URL = "https://www.googleapis.com/books/v1";
 
-interface Book {
-  title: string;
-  subtitle: string;
-  id: string;
-  thumbnail: string;
-  averageRating: number;
-  pageCount: number;
-  authors: string[];
-  description: string;
-  price: {
-    amount: number;
-    currencyCode: string;
-  };
-  buyLink: string | undefined;
-}
-
-const mapItemToBook = (item: any): Book => {
+const mapItemToBook = (item: any) => {
   return {
     id: item.id,
     title: item.volumeInfo.title,
@@ -37,7 +21,7 @@ const mapItemToBook = (item: any): Book => {
   };
 };
 
-const { data: books } = await useLazyFetch<Book[]>(
+const { data: books } = await useLazyFetch(
   `${GOOGLE_URL}/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en`,
   {
     transform: (d: any) => d.items.map(mapItemToBook),
