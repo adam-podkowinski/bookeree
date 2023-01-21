@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ middleware: "auth" });
 
-const { data: books } = useBooks();
+const { data: books, refresh } = useBooks();
 
 const sortedBooks = computed(() => {
   return books.value
@@ -57,7 +57,15 @@ const getBooksText = computed(() => {
         </div>
         <ul class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           <li v-for="book in sortedBooks" :key="book.id.toString()">
-            <TheBook v-bind="book" />
+            <TheBook v-bind="book" :refresh="refresh" />
+          </li>
+          <li>
+            <NuxtLink
+              to="/add"
+              class="relative grid h-full place-items-center gap-3 rounded-lg bg-amber-300 p-4 opacity-60 shadow-lg shadow-amber-300/20 transition hover:-translate-y-0.5 hover:opacity-100"
+            >
+              <p class="p-6 text-3xl font-bold text-zinc-800">📚 Add a Book</p>
+            </NuxtLink>
           </li>
         </ul>
       </div>

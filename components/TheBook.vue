@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import type { Book } from "@/types";
-defineProps<Book>();
+interface BookProps extends Book {
+  refresh: () => void;
+}
+const props = defineProps<BookProps>();
+
+const removeBook = async () => {
+  const removed = await $fetch(`/api/books/${props.id}`, {
+    method: "DELETE",
+    headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+  });
+  if (removed) {
+    props.refresh();
+  } else {
+    alert("ERROR: Could not remove a book!");
+  }
+};
 </script>
 <template>
   <div
@@ -41,6 +56,7 @@ defineProps<Book>();
       </div>
       <button
         class="w-full rounded-lg bg-rose-500 py-3 font-semibold text-white shadow-md shadow-red-300/10 transition duration-300 hover:bg-rose-600 hover:shadow-red-500/10"
+        @click="removeBook"
       >
         Remove
       </button>

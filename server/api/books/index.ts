@@ -3,6 +3,7 @@ import { transformBook } from "@/utils/transformBook";
 
 const prisma = new PrismaClient();
 
+// TODO: use prisma pick only needed fields
 export default defineEventHandler(async (event) => {
   if (!event.context.authenticated) throw new Error("Unauthenticated");
   const booksDb = await prisma.books.findMany({

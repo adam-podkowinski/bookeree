@@ -51,7 +51,7 @@ const { data: length } = useLazyFetch("/api/books/length", {
       <NuxtLink class="button" to="/books">
         <Icon name="ph:books-bold" size="1.3em" /> My Books
       </NuxtLink>
-      <NuxtLink class="button transition-all" to="/find">
+      <NuxtLink class="button transition-all" to="/add">
         <Icon name="material-symbols:add" size="1.3em" />
         Add a Book
       </NuxtLink>
