@@ -23,9 +23,9 @@ const search = async (query: string) => {
 </script>
 <template>
   <div>
-    <h1 class="text-4xl font-bold">Search for a book</h1>
+    <h1 class="text-3xl font-bold sm:text-4xl">Search for a book</h1>
     <form
-      class="mt-6 flex items-center gap-6 rounded-xl bg-zinc-800 px-6 py-4"
+      class="mt-6 flex flex-col items-center gap-6 rounded-xl bg-zinc-800 px-6 py-4 md:flex-row"
       @submit.prevent
     >
       <label for="query" class="text-2xl font-medium">Title or Author:</label>
@@ -33,8 +33,8 @@ const search = async (query: string) => {
         id="query"
         v-model="searchQuery"
         type="text"
-        name="query"
-        class="flex-1 rounded-xl px-2 py-4 text-xl font-medium text-zinc-800 ring-amber-300 focus:outline-none focus:ring-4"
+        placeholder="Search query"
+        class="w-full flex-1 rounded-xl px-2 py-4 text-xl font-medium text-zinc-800 ring-amber-300 focus:outline-none focus:ring-4"
       />
       <button
         class="rounded-xl bg-amber-300 py-2 px-6 text-5xl text-zinc-800 transition-colors hover:bg-amber-400"
