@@ -1,17 +1,20 @@
-export interface Book {
+export interface ApiBook {
   title: string;
   subtitle: string;
-  id: bigint;
   volumeId: string;
   thumbnail: string;
   averageRating?: number;
   pageCount: number;
   authors: string[];
   description: string;
-  createdAt: string;
   price: {
-    amount: number;
-    currencyCode: string;
+    amount?: number;
+    currencyCode?: string;
   };
   buyLink: string | undefined;
+}
+
+export interface Book extends ApiBook {
+  id: bigint;
+  createdAt: string;
 }

@@ -27,7 +27,7 @@ const getBooksText = computed(() => {
           class="mb-6 flex flex-col items-center justify-between gap-3 self-center rounded-xl border-2 border-zinc-700/60 bg-zinc-800 px-6 py-3 text-center text-lg font-black tracking-wide text-orange-100 shadow-md transition-colors hover:bg-zinc-600/40 lg:flex-row lg:gap-6 lg:text-xl"
         >
           <div class="flex flex-col text-xl lg:flex-row lg:gap-2">
-            <h1 class="">Your library:</h1>
+            <h1>Your library:</h1>
             <span class="normal-case tracking-wide text-amber-300">
               {{ getBooksText }}
             </span>
@@ -55,11 +55,15 @@ const getBooksText = computed(() => {
             </select>
           </div>
         </div>
-        <ul class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <TransitionGroup
+          tag="ul"
+          name="list"
+          class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3"
+        >
           <li v-for="book in sortedBooks" :key="book.id.toString()">
             <TheBook v-bind="book" :refresh="refresh" />
           </li>
-          <li>
+          <li key="addNewBook">
             <NuxtLink
               to="/add"
               class="relative grid h-full place-items-center gap-3 rounded-lg bg-amber-300 p-4 opacity-60 shadow-lg shadow-amber-300/20 transition hover:-translate-y-0.5 hover:opacity-100"
@@ -67,9 +71,27 @@ const getBooksText = computed(() => {
               <p class="p-6 text-3xl font-bold text-zinc-800">📚 Add a Book</p>
             </NuxtLink>
           </li>
-        </ul>
+        </TransitionGroup>
       </div>
       <h1 v-else>Loading...</h1>
     </transition>
   </div>
 </template>
+
+<style>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+</style>

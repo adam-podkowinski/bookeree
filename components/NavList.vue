@@ -15,23 +15,25 @@ const navClass = computed(() =>
   settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
 );
 
-const loggedInOptions: NavOptions[] = [
+const signInWithGoogle = () =>
+  session.auth.signInWithOAuth({ provider: "google" });
+
+const signOut = async () => {
+  await session.auth.signOut();
+  // Needs a timeout to update user on /
+  setTimeout(() => navigateTo("/", { replace: true }), 200);
+};
+
+const loggedInOptions = computed<NavOptions[]>(() => [
   { title: "My Books", icon: "ph:books-bold", link: "/books" },
   { title: "Add a Book", icon: "material-symbols:add", link: "/add" },
   { title: "Profile", icon: "carbon:user-avatar-filled", link: "/profile" },
   {
     title: "Logout",
     icon: "fa-solid:sign-out-alt",
-    onClick: async () => {
-      await session.auth.signOut();
-      // Needs a timeout to update user on /
-      setTimeout(() => navigateTo("/", { replace: true }), 200);
-    },
+    onClick: signOut,
   },
-];
-
-const signInWithGoogle = () =>
-  session.auth.signInWithOAuth({ provider: "google" });
+]);
 
 const loggedOffOptions = computed<NavOptions[]>(() => [
   {
@@ -46,8 +48,8 @@ const loggedOffOptions = computed<NavOptions[]>(() => [
   },
 ]);
 
-const options = computed(() => {
-  return !user.value ? loggedOffOptions.value : loggedInOptions;
+const options = computed<NavOptions[]>(() => {
+  return user.value ? loggedInOptions.value : loggedOffOptions.value;
 });
 </script>
 <template>
@@ -73,9 +75,11 @@ const options = computed(() => {
       justify-center gap-4 bg-amber-300 transition duration-200 lg:static lg:flex
 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0 lg:flex-row ${navClass}`"
     >
-      <li v-for="{ icon, link, title, onClick } of options" :key="link">
-        <NavItem :icon="icon" :link="link" :title="title" :on-click="onClick" />
-      </li>
+      <ClientOnly>
+        <li v-for="option of options" :key="option.link">
+          <NavItem v-bind="option" />
+        </li>
+      </ClientOnly>
     </ul>
   </nav>
 </template>

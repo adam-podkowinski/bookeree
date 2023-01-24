@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { transformBook } from "@/utils/transformBook";
+import { transformBook } from "@/utils/bookUtils";
 
 const prisma = new PrismaClient();
 

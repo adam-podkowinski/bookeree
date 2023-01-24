@@ -17,6 +17,6 @@
 .page-enter-from,
 .page-leave-to,
 .page-appear-from {
-  @apply opacity-0 translate-y-1;
+  @apply translate-y-1 opacity-0;
 }
 </style>

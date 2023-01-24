@@ -1,51 +1,91 @@
 <script setup lang="ts">
-definePageMeta({ middleware: "auth" });
+import type { ApiBook } from "@/types";
+definePageMeta({ middleware: "auth", keepalive: true });
 
 const GOOGLE_URL = "https://www.googleapis.com/books/v1";
 
-const mapItemToBook = (item: any) => {
-  return {
-    id: item.id,
-    title: item.volumeInfo.title,
-    subtitle: item.volumeInfo.subtitle,
-    authors: item.volumeInfo.authors,
-    description: item.volumeInfo.description,
-    averageRating: item.volumeInfo.averageRating,
-    pageCount: item.volumeInfo.pageCount,
-    thumbnail: item.volumeInfo.imageLinks.thumbnail,
-    buyLink: item.saleInfo.buyLink,
-    price: {
-      amount: item.saleInfo.retailPrice.amount,
-      currencyCode: item.saleInfo.retailPrice.currencyCode,
-    },
-  };
-};
-
-const { data: books } = await useLazyFetch(
-  `${GOOGLE_URL}/volumes?q="a storm of swords"&maxResults=5&printType=books&filter=ebooks&langRestrict=en`,
-  {
-    transform: (d: any) => d.items.map(mapItemToBook),
+const searchQuery = ref<string>("");
+const loading = ref(false);
+const books = ref<ApiBook[]>([]);
+const search = async (query: string) => {
+  loading.value = true;
+  books.value = [];
+  const res: any = await $fetch(
+    `${GOOGLE_URL}/volumes?q="${query}"&maxResults=6&printType=books&filter=ebooks&langRestrict=en`
+  );
+  if (res.items?.length > 0) {
+    res.items.forEach((b: any) => {
+      books.value.push(transformBookApi(b));
+    });
   }
-);
+  loading.value = false;
+};
 </script>
 <template>
   <div>
-    <h1>Books</h1>
-    <ul v-if="books">
-      <li v-for="(book, index) in books" :key="index">
-        <h1 class="text-xl">{{ book.title }}:</h1>
-        <img v-if="book.thumbnail" :src="book.thumbnail" :alt="book.title" />
-        <p class="text-lg">
-          {{ book.id }}
-          {{ book.authors }}
-          {{ book.price.amount }}
-          {{ book.price.currencyCode }}
-          {{ book.averageRating }}
+    <h1 class="text-4xl font-bold">Search for a book</h1>
+    <form
+      class="mt-6 flex items-center gap-6 rounded-xl bg-zinc-800 px-6 py-4"
+      @submit.prevent
+    >
+      <label for="query" class="text-2xl font-medium">Title or Author:</label>
+      <input
+        id="query"
+        v-model="searchQuery"
+        type="text"
+        name="query"
+        class="flex-1 rounded-xl px-2 py-4 text-xl font-medium text-zinc-800 ring-amber-300 focus:outline-none focus:ring-4"
+      />
+      <button
+        class="rounded-xl bg-amber-300 py-2 px-6 text-5xl text-zinc-800 transition-colors hover:bg-amber-400"
+        @click="search(searchQuery)"
+      >
+        <Transition mode="out-in" name="loading">
+          <Icon v-if="loading" name="mdi:loading" class="animate-spin" />
+          <Icon v-else name="material-symbols:search" />
+        </Transition>
+      </button>
+    </form>
+    <ul v-if="books" class="mt-12">
+      <li
+        v-for="book in books"
+        :key="book.volumeId"
+        class="mb-6 flex flex-col items-start justify-center gap-1"
+      >
+        <p class="text-xl font-semibold">
+          {{ book.title }}
         </p>
-        <hr class="h-4 border-none bg-white" />
-        <hr class="h-4 border-none bg-white" />
+        <p
+          v-for="author in book.authors"
+          :key="author"
+          class="text-lg text-neutral-400"
+        >
+          {{ author }}
+        </p>
+        <img
+          :src="book.thumbnail"
+          class="max-h-48 rounded-xl object-contain"
+          :alt="book.title"
+        />
+        <button
+          class="mt-3 h-min rounded-xl bg-amber-300 px-4 py-3 font-medium text-zinc-800 transition hover:bg-amber-400"
+        >
+          ➕ Add to library
+        </button>
       </li>
     </ul>
-    <h1 v-else>Loading...</h1>
   </div>
 </template>
+
+<style lang="postcss">
+.loading,
+.loading-enter-active,
+.loading-leave-active {
+  @apply transition-all duration-300;
+}
+
+.loading-enter-from,
+.loading-leave-to {
+  @apply opacity-0;
+}
+</style>
