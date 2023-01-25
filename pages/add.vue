@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// TODO: after adding a book to a library change add button to remove book
 import type { ApiBook } from "@/types";
 import { useBooksStore } from "@/store/books";
 

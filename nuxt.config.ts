@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   },
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
-    keepalive: true,
+    keepalive: { include: "add" },
     pageTransition: {
       mode: "out-in",
       name: "page",
