@@ -1,6 +1,6 @@
 export interface ApiBook {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   volumeId: string;
   thumbnail: string;
   averageRating?: number;

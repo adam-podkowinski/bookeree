@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import type { ApiBook } from "@/types";
+import { useBooksStore } from "@/store/books";
+
 definePageMeta({ middleware: "auth", keepalive: true });
+
+const bookStore = useBooksStore();
 
 const GOOGLE_URL = "https://www.googleapis.com/books/v1";
 
 const searchQuery = ref<string>("");
 const loading = ref(false);
 const books = ref<ApiBook[]>([]);
+const user = useSupabaseUser();
+
 const search = async (query: string) => {
   loading.value = true;
   books.value = [];
@@ -19,6 +25,17 @@ const search = async (query: string) => {
     });
   }
   loading.value = false;
+};
+
+const addToLibrary = async (volumeId: string) => {
+  const book = await $fetch("/api/books", {
+    method: "post",
+    body: { volumeId },
+    headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+  });
+  if (!book) alert("ERROR: could not add a book!");
+  clearNuxtData(`books for ${user.value?.id}`);
+  bookStore.refresh();
 };
 </script>
 <template>
@@ -69,6 +86,7 @@ const search = async (query: string) => {
         />
         <button
           class="mt-3 h-min rounded-xl bg-amber-300 px-4 py-3 font-medium text-zinc-800 transition hover:bg-amber-400"
+          @click="addToLibrary(book.volumeId)"
         >
           ➕ Add to library
         </button>

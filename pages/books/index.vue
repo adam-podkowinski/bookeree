@@ -1,7 +1,23 @@
 <script setup lang="ts">
+import { useBooksStore } from "@/store/books";
+import { Book } from "~~/types";
+
 definePageMeta({ middleware: "auth" });
 
+const bookStore = useBooksStore();
+
 const { data: books, refresh } = useBooks();
+
+const onRemove = (book: Book) => {
+  books.value?.splice(books.value.indexOf(book), 1);
+};
+
+watchEffect(() => {
+  if (bookStore.shouldRefresh) {
+    refresh();
+    bookStore.refreshed();
+  }
+});
 
 const sortedBooks = computed(() => {
   return books.value
@@ -61,7 +77,7 @@ const getBooksText = computed(() => {
           class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3"
         >
           <li v-for="book in sortedBooks" :key="book.id.toString()">
-            <TheBook v-bind="book" :refresh="refresh" />
+            <TheBook v-bind="book" :on-remove="() => onRemove(book)" />
           </li>
           <li key="addNewBook">
             <NuxtLink
@@ -82,13 +98,13 @@ const getBooksText = computed(() => {
 .list-move,
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.25s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(1rem);
 }
 
 .list-leave-active {

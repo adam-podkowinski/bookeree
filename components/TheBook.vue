@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Book } from "@/types";
 interface BookProps extends Book {
-  refresh: () => void;
+  onRemove: () => void;
 }
 const props = defineProps<BookProps>();
 
@@ -11,7 +11,7 @@ const removeBook = async () => {
     headers: useRequestHeaders(["Cookie"]) as HeadersInit,
   });
   if (removed) {
-    props.refresh();
+    props.onRemove();
   } else {
     alert("ERROR: Could not remove a book!");
   }
