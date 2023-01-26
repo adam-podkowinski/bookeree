@@ -21,7 +21,7 @@ const signInWithGoogle = () =>
 const signOut = async () => {
   await session.auth.signOut();
   // Needs a timeout to update user on /
-  setTimeout(() => navigateTo("/", { replace: true }), 200);
+  /* setTimeout(() => navigateTo("/", { replace: true }), 200); */
 };
 
 const loggedInOptions = computed<NavOptions[]>(() => [

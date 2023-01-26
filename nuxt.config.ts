@@ -4,9 +4,13 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "nuxt-icon",
-    // Move to supabase-js because @nuxtjs/supabase doesnt work with netlify
     "@nuxtjs/supabase",
   ],
+  supabase: {
+    redirect: {
+      login: '/',
+    },
+  },
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
     keepalive: { include: "add" },
