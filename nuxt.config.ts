@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "nuxt-icon",
+    // Move to supabase-js because @nuxtjs/supabase doesnt work with netlify
     "@nuxtjs/supabase",
   ],
   app: {
