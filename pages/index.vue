@@ -1,14 +1,16 @@
 <script setup lang="ts">
 const { auth } = useSupabaseAuthClient();
+const user = useSupabaseUser();
 
-/* watchEffect(() => { */
-/*   if (user.value) { */
-/*     navigateTo("/dashboard"); */
-/*   } */
-/* }); */
+watchEffect(() => {
+  if (user.value) {
+    navigateTo("/dashboard");
+  }
+});
 
 const login = async () => {
   const { error } = await auth.signInWithOAuth({ provider: "google" });
+  console.log('HELLO');
   if (error) return alert("Something went wrong!");
 };
 </script>
