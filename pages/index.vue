@@ -4,12 +4,17 @@ const user = useSupabaseUser();
 
 watchEffect(() => {
   if (user.value) {
-    navigateTo("/dashboard", { replace: true });
+    /* navigateTo("/dashboard", { replace: true }); */
   }
 });
 
 const login = () => {
-  client.auth.signInWithOAuth({ provider: "google" });
+  client.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "https://comforting-druid-714b01.netlify.app/dashboard",
+    },
+  });
 };
 </script>
 <template>
