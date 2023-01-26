@@ -16,12 +16,17 @@ const navClass = computed(() =>
 );
 
 const signInWithGoogle = () =>
-  session.auth.signInWithOAuth({ provider: "google" });
+  session.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "https://bookeree.vercel.app",
+    },
+  });
 
 const signOut = async () => {
   await session.auth.signOut();
   // Needs a timeout to update user on /
-  /* setTimeout(() => navigateTo("/", { replace: true }), 200); */
+  navigateTo("/");
 };
 
 const loggedInOptions = computed<NavOptions[]>(() => [
