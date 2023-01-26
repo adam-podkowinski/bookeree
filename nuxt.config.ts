@@ -6,12 +6,6 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
-  supabase: {
-    redirect: {
-      login: "/",
-      callback: "/",
-    },
-  },
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
     keepalive: { include: "add" },
