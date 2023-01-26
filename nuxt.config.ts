@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  ssr: false,
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
     keepalive: { include: "add" },
