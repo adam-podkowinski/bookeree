@@ -6,14 +6,9 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
-  typescript: {
-    shim: false,
-    strict: true,
-    typeCheck: true,
-  },
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
-    keepalive: { include: "add" },
+    // keepalive: { include: "add" },
     pageTransition: {
       mode: "out-in",
       name: "page",

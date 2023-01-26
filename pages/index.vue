@@ -1,20 +1,17 @@
 <script setup lang="ts">
-const client = useSupabaseAuthClient();
+const { auth } = useSupabaseAuthClient();
 const user = useSupabaseUser();
 
-watchEffect(() => {
-  if (user.value) {
-    /* navigateTo("/dashboard", { replace: true }); */
-  }
-});
+/* watchEffect(() => { */
+/*   if (user.value) { */
+/*     navigateTo("/dashboard"); */
+/*   } */
+/* }); */
 
-const login = () => {
-  client.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: "https://comforting-druid-714b01.netlify.app/",
-    },
-  });
+const login = async () => {
+  const { error } = await auth.signInWithOAuth({ provider: "google" });
+  if (error) return alert("Something went wrong!");
+  await navigateTo('/dashboard');
 };
 </script>
 <template>
