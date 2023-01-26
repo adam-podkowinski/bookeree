@@ -15,13 +15,15 @@ const navClass = computed(() =>
   settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
 );
 
-const signInWithGoogle = () =>
-  session.auth.signInWithOAuth({
+const signInWithGoogle = async () => {
+  const { error } = await session.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: "/",
     },
   });
+  if (error) return alert("Something went wrong!");
+};
 
 const signOut = async () => {
   setTimeout(() => navigateTo("/"), 500);
