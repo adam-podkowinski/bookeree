@@ -27,7 +27,6 @@ const signOut = async () => {
 const loggedInOptions = computed<NavOptions[]>(() => [
   { title: "My Books", icon: "ph:books-bold", link: "/books" },
   { title: "Add a Book", icon: "material-symbols:add", link: "/add" },
-  { title: "Profile", icon: "carbon:user-avatar-filled", link: "/profile" },
   {
     title: "Logout",
     icon: "fa-solid:sign-out-alt",

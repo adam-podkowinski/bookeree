@@ -1,42 +1,50 @@
 <script setup lang="ts">
-// TODO: after adding a book to a library change add button to remove book
+// TODO: refactor: extract each list item to a component
 import type { ApiBook } from "@/types";
 import { useBooksStore } from "@/store/books";
 
 definePageMeta({ middleware: "auth", keepalive: true });
 
-const bookStore = useBooksStore();
-
 const GOOGLE_URL = "https://www.googleapis.com/books/v1";
+
+const booksStore = useBooksStore();
 
 const searchQuery = ref<string>("");
 const loading = ref(false);
-const books = ref<ApiBook[]>([]);
-const user = useSupabaseUser();
+const loadingAction = ref<{ [key: string]: boolean }>({});
+const searchBooks = ref<ApiBook[]>([]);
+const addedIds = computed(() => {
+  return booksStore.books.map((b) => b.volumeId);
+});
 
 const search = async (query: string) => {
   loading.value = true;
-  books.value = [];
+  searchBooks.value = [];
   const res: any = await $fetch(
     `${GOOGLE_URL}/volumes?q="${query}"&maxResults=6&printType=books&filter=ebooks&langRestrict=en`
   );
   if (res.items?.length > 0) {
     res.items.forEach((b: any) => {
-      books.value.push(transformBookApi(b));
+      searchBooks.value.push(transformBookApi(b));
     });
   }
   loading.value = false;
 };
 
-const addToLibrary = async (volumeId: string) => {
-  const book = await $fetch("/api/books", {
-    method: "post",
-    body: { volumeId },
-    headers: useRequestHeaders(["Cookie"]) as HeadersInit,
-  });
-  if (!book) alert("ERROR: could not add a book!");
-  clearNuxtData(`books for ${user.value?.id}`);
-  bookStore.refresh();
+const findBookId = (volumeId: string): bigint | undefined => {
+  return booksStore.books.find((b) => b.volumeId === volumeId)?.id;
+};
+
+const onButtonClick = async (volumeId: string) => {
+  loadingAction.value[volumeId] = true;
+  if (addedIds.value.includes(volumeId)) {
+    const id = findBookId(volumeId);
+    if (!id) return;
+    await booksStore.removeBook(id);
+  } else {
+    await booksStore.addBook(volumeId);
+  }
+  loadingAction.value[volumeId] = false;
 };
 </script>
 <template>
@@ -64,9 +72,9 @@ const addToLibrary = async (volumeId: string) => {
         </Transition>
       </button>
     </form>
-    <ul v-if="books" class="mt-12">
+    <ul v-if="searchBooks" class="mt-12">
       <li
-        v-for="book in books"
+        v-for="book in searchBooks"
         :key="book.volumeId"
         class="mb-6 flex flex-col items-start justify-center gap-1"
       >
@@ -87,9 +95,16 @@ const addToLibrary = async (volumeId: string) => {
         />
         <button
           class="mt-3 h-min rounded-xl bg-amber-300 px-4 py-3 font-medium text-zinc-800 transition hover:bg-amber-400"
-          @click="addToLibrary(book.volumeId)"
+          :class="
+            addedIds.includes(book.volumeId) && 'bg-rose-300 hover:bg-rose-400'
+          "
+          @click="onButtonClick(book.volumeId)"
         >
-          ➕ Add to library
+          <p v-if="loadingAction[book.volumeId]">Loading...</p>
+          <div v-else>
+            <p v-if="addedIds.includes(book.volumeId)">❌ Remove book</p>
+            <p v-else>➕ Add to library</p>
+          </div>
         </button>
       </li>
     </ul>

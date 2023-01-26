@@ -1,44 +1,30 @@
 <script setup lang="ts">
 import { useBooksStore } from "@/store/books";
-import { Book } from "~~/types";
 
 definePageMeta({ middleware: "auth" });
 
-const bookStore = useBooksStore();
-
-const { data: books, refresh } = useBooks();
-
-const onRemove = (book: Book) => {
-  books.value?.splice(books.value.indexOf(book), 1);
-};
-
-watchEffect(() => {
-  if (bookStore.shouldRefresh) {
-    refresh();
-    bookStore.refreshed();
-  }
-});
+const booksStore = useBooksStore();
 
 const sortedBooks = computed(() => {
-  return books.value
-    ? books.value.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+  return booksStore.books
+    ? booksStore.books.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     : [];
 });
 
 const getBooksText = computed(() => {
-  if (books.value?.length === 0) {
+  if (booksStore.books.length === 0) {
     return "No books added";
-  } else if (books.value?.length === 1) {
-    return `${books.value?.length} book`;
+  } else if (booksStore.books.length === 1) {
+    return `${booksStore.books.length} book`;
   } else {
-    return `${books.value?.length} books`;
+    return `${booksStore.books.length} books`;
   }
 });
 </script>
 <template>
   <div class="flex flex-col items-center gap-6">
     <transition name="page">
-      <div v-if="books" class="flex flex-col">
+      <div v-if="booksStore.books" class="flex flex-col">
         <div
           class="mb-6 flex flex-col items-center justify-between gap-3 self-center rounded-xl border-2 border-zinc-700/60 bg-zinc-800 px-6 py-3 text-center text-lg font-black tracking-wide text-orange-100 shadow-md transition-colors hover:bg-zinc-600/40 lg:flex-row lg:gap-6 lg:text-xl"
         >
@@ -77,7 +63,7 @@ const getBooksText = computed(() => {
           class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3"
         >
           <li v-for="book in sortedBooks" :key="book.id.toString()">
-            <TheBook v-bind="book" :on-remove="() => onRemove(book)" />
+            <TheBook v-bind="book" />
           </li>
           <li key="addNewBook">
             <NuxtLink
