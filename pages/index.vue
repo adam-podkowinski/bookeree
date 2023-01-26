@@ -12,7 +12,6 @@ const login = () => {
   client.auth.signInWithOAuth({
     provider: "google",
     options: {
-      skipBrowserRedirect: true,
       redirectTo: "https://comforting-druid-714b01.netlify.app/",
     },
   });
