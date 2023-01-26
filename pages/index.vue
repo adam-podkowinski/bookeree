@@ -11,9 +11,6 @@ watchEffect(() => {
 const login = async () => {
   const { error } = await auth.signInWithOAuth({
     provider: "google",
-    options: {
-      redirectTo: "https://comforting-druid-714b01.netlify.app/dashboard",
-    },
   });
   if (error) return alert("Something went wrong!");
 };
