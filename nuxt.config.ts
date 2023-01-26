@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
+  ssr: false,
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
     // keepalive: { include: "add" },

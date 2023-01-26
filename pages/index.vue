@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { auth } = useSupabaseAuthClient();
-const user = useSupabaseUser();
 
 /* watchEffect(() => { */
 /*   if (user.value) { */
@@ -11,7 +10,6 @@ const user = useSupabaseUser();
 const login = async () => {
   const { error } = await auth.signInWithOAuth({ provider: "google" });
   if (error) return alert("Something went wrong!");
-  await navigateTo('/dashboard');
 };
 </script>
 <template>
