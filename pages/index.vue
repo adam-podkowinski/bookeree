@@ -12,7 +12,7 @@ const login = async () => {
   const { error } = await auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: 'https://bookeree.vercel.app'
+      redirectTo: '/'
     }
   });
   if (error) return alert("Something went wrong!");

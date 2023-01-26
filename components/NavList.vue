@@ -19,7 +19,7 @@ const signInWithGoogle = () =>
   session.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://bookeree.vercel.app",
+      redirectTo: "/",
     },
   });
 

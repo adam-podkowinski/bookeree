@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   ],
   supabase: {
     redirect: {
-      login: "https://bookeree.vercel.app",
-      callback: "https://bookeree.vercel.app",
+      login: "/",
+      callback: "/",
     },
   },
   app: {
