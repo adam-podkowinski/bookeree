@@ -1,3 +1,14 @@
+<script setup lang="ts">
+useHead({
+  title: "Bookeree",
+  meta: [
+    {
+      name: "google-site-verification",
+      content: "d2fzBfQCq8XUEfTdDLrd-ng3rSewW6FJKEfS7rIjVMw",
+    },
+  ],
+});
+</script>
 <template>
   <div class="min-h-screen bg-zinc-900 text-neutral-100">
     <NuxtLayout>
