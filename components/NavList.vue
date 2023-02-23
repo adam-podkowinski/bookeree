@@ -26,7 +26,7 @@ const signInWithGoogle = async () => {
 };
 
 const signOut = async () => {
-  setTimeout(() => navigateTo("/"), 500);
+  setTimeout(() => navigateTo("/"), 1000);
   await session.auth.signOut();
 };
 

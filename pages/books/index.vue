@@ -30,9 +30,12 @@ const getBooksText = computed(() => {
         >
           <div class="flex flex-col text-xl lg:flex-row lg:gap-2">
             <h1>Your library:</h1>
-            <span class="normal-case tracking-wide text-amber-300">
-              {{ getBooksText }}
-            </span>
+            <p class="normal-case tracking-wide text-amber-300">
+              <span v-if="booksStore.loading"> Loading... </span>
+              <span v-else>
+                {{ getBooksText }}
+              </span>
+            </p>
           </div>
           <div class="flex items-center gap-2">
             <label for="sort">Show</label>

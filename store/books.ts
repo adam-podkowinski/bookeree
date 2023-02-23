@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Book } from "~~/types";
 
 export const useBooksStore = defineStore("books", () => {
+  const loading = ref<boolean>(true);
   const books = ref<Book[]>([]);
 
   const user = useSupabaseUser();
@@ -11,6 +12,7 @@ export const useBooksStore = defineStore("books", () => {
     if (user.value === null) {
       return;
     }
+    loading.value = true;
     const { data: booksData } = await useFetch<Book[]>("/api/books", {
       key: `books for ${user.value.id}`,
       method: "get",
@@ -18,6 +20,7 @@ export const useBooksStore = defineStore("books", () => {
     });
     if (booksData.value === null) return;
     books.value = booksData.value;
+    loading.value = false;
   });
 
   const addBook = async (volumeId: string) => {
@@ -47,5 +50,5 @@ export const useBooksStore = defineStore("books", () => {
     }
   };
 
-  return { books, addBook, removeBook };
+  return { books, addBook, removeBook, loading };
 });
