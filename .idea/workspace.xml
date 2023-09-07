@@ -5,23 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29ad5c4f-cca3-4962-a305-f08acc6956d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.dev" beforeDir="false" afterPath="$PROJECT_DIR$/.env.dev" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/NavList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/NavList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composables/useBook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/composables/useBook.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/add.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/add.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/books/[id].delete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/api/books/[id].delete.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/books/[id].ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/api/books/[id].ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/books/index.post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/api/books/index.post.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/books/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/api/books/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/books/length.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/api/books/length.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/middleware/auth.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/books.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/books.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bookUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/bookUtils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +79,7 @@
       <workItem from="1694108193770" duration="51000" />
       <workItem from="1694108258261" duration="2169000" />
       <workItem from="1694110446146" duration="71000" />
-      <workItem from="1694110705263" duration="4722000" />
+      <workItem from="1694110705263" duration="5391000" />
     </task>
     <servers />
   </component>
