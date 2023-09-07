@@ -21,7 +21,7 @@ const search = async (query: string) => {
   loading.value = true;
   searchBooks.value = [];
   const res: any = await $fetch(
-    `${GOOGLE_URL}/volumes?q="${query}"&maxResults=6&printType=books&filter=ebooks&langRestrict=en`
+    `${GOOGLE_URL}/volumes?q="${query}"&maxResults=6&printType=books&filter=ebooks&langRestrict=en`,
   );
   if (res.items?.length > 0) {
     res.items.forEach((b: any) => {
@@ -63,7 +63,7 @@ const onButtonClick = async (volumeId: string) => {
         class="w-full flex-1 rounded-xl px-2 py-4 text-xl font-medium text-zinc-800 ring-amber-300 focus:outline-none focus:ring-4"
       />
       <button
-        class="rounded-xl bg-amber-300 py-2 px-6 text-5xl text-zinc-800 transition-colors hover:bg-amber-400"
+        class="rounded-xl bg-amber-300 px-6 py-2 text-5xl text-zinc-800 transition-colors hover:bg-amber-400"
         @click="search(searchQuery)"
       >
         <Transition mode="out-in" name="loading">

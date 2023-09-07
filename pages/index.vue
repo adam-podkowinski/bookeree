@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { auth } = useSupabaseAuthClient();
+const { auth } = useSupabaseClient();
 const user = useSupabaseUser();
 
 watchEffect(() => {
@@ -11,9 +11,6 @@ watchEffect(() => {
 const login = async () => {
   const { error } = await auth.signInWithOAuth({
     provider: "google",
-    options: {
-      redirectTo: "/",
-    },
   });
   if (error) return alert("Something went wrong!");
 };

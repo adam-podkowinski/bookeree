@@ -16,7 +16,7 @@ export const useBooksStore = defineStore("books", () => {
     const { data: booksData } = await useFetch<Book[]>("/api/books", {
       key: `books for ${user.value.id}`,
       method: "get",
-      headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+      headers: useRequestHeaders(["cookie"]) as HeadersInit,
     });
     if (booksData.value === null) return;
     books.value = booksData.value;
@@ -39,7 +39,7 @@ export const useBooksStore = defineStore("books", () => {
   const removeBook = async (id: bigint) => {
     books.value.splice(
       books.value.findIndex((b) => b.id === id),
-      1
+      1,
     );
     const removed = await $fetch<number>(`/api/books/${id}`, {
       method: "DELETE",

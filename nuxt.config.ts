@@ -1,3 +1,4 @@
+// TODO: use redirect from supabase nuxt plugin
 export default defineNuxtConfig({
   modules: [
     "@vue-macros/nuxt",
@@ -6,6 +7,13 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
+  supabase: {
+    redirectOptions: {
+      login: "/",
+      callback: "/dashboard",
+      exclude: ["/*"],
+    },
+  },
   app: {
     // Nuxt Bug: overriding in definePageMeta doesn't work
     keepalive: { include: "add" },

@@ -1,5 +1,5 @@
 import { books } from "@prisma/client";
-import type { Book, ApiBook } from "@/types";
+import type { ApiBook, Book } from "@/types";
 
 const GOOGLE_URL = "https://www.googleapis.com/books/v1";
 
@@ -24,10 +24,9 @@ export const transformBookApi = (item: any): ApiBook => {
 export const transformBook = async (item: books): Promise<Book> => {
   const data: any = await $fetch(`${GOOGLE_URL}/volumes/${item.volume_id}`);
   const apiBook: ApiBook = transformBookApi(data);
-  const book: Book = {
+  return {
     ...apiBook,
     id: item.id,
     createdAt: item.created_at.toISOString(),
   };
-  return book;
 };

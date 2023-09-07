@@ -1,13 +1,15 @@
 import { PrismaClient } from "@prisma/client";
+import { serverSupabaseUser } from "#supabase/server";
 
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-  if (!event.context.authenticated) throw new Error("Unauthenticated");
+  const user = await serverSupabaseUser(event);
+  if (!user) throw new Error("Unauthenticated");
   const bookDb = await prisma.books.deleteMany({
     where: {
-      user_id: event.context.user.id,
-      id: BigInt(event.context.params.id),
+      user_id: user.id,
+      id: BigInt(event.context.params!.id),
     },
   });
   return bookDb.count > 0;

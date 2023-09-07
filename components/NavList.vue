@@ -9,10 +9,12 @@ interface NavOptions {
 }
 
 const settings = useSettingsStore();
-const session = useSupabaseAuthClient();
+const session = useSupabaseClient();
 const user = useSupabaseUser();
 const navClass = computed(() =>
-  settings.navOpen ? "opacity-1" : "max-lg:opacity-0 max-lg:pointer-events-none"
+  settings.navOpen
+    ? "opacity-1"
+    : "max-lg:opacity-0 max-lg:pointer-events-none",
 );
 
 const signInWithGoogle = async () => {

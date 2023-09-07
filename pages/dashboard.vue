@@ -3,7 +3,7 @@ definePageMeta({ middleware: "auth" });
 const user = useSupabaseUser();
 const { data: length } = useLazyFetch("/api/books/length", {
   key: `books length for ${user.value?.id}`,
-  headers: useRequestHeaders(["Cookie"]) as HeadersInit,
+  headers: useRequestHeaders(["cookie"]) as HeadersInit,
 });
 </script>
 <template>
@@ -49,7 +49,8 @@ const { data: length } = useLazyFetch("/api/books/length", {
       class="mb-10 flex w-full flex-col items-stretch gap-8 lg:mb-14 lg:flex-row"
     >
       <NuxtLink class="button" to="/books">
-        <Icon name="ph:books-bold" size="1.3em" /> My Books
+        <Icon name="ph:books-bold" size="1.3em" />
+        My Books
       </NuxtLink>
       <NuxtLink class="button transition-all" to="/add">
         <Icon name="material-symbols:add" size="1.3em" />
@@ -62,6 +63,6 @@ const { data: length } = useLazyFetch("/api/books/length", {
 <style lang="postcss" scoped>
 .button {
   @apply w-full rounded-xl bg-amber-300 px-8 py-5 text-xl
-    font-semibold text-zinc-900 duration-300 hover:-translate-y-0.5 lg:w-auto;
+  font-semibold text-zinc-900 duration-300 hover:-translate-y-0.5 lg:w-auto;
 }
 </style>
